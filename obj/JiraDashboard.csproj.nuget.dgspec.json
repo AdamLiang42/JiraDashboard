@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\adam_\\Desktop\\JiraDashboard\\JiraDashboard.csproj": {}
+    "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj": {}
   },
   "projects": {
-    "C:\\Users\\adam_\\Desktop\\JiraDashboard\\JiraDashboard.csproj": {
+    "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\adam_\\Desktop\\JiraDashboard\\JiraDashboard.csproj",
+        "projectUniqueName": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj",
         "projectName": "JiraDashboard",
-        "projectPath": "C:\\Users\\adam_\\Desktop\\JiraDashboard\\JiraDashboard.csproj",
-        "packagesPath": "C:\\Users\\adam_\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\adam_\\Desktop\\JiraDashboard\\obj\\",
+        "projectPath": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj",
+        "packagesPath": "C:\\Users\\adamliang\\.nuget\\packages\\",
+        "outputPath": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
         ],
         "configFilePaths": [
-          "C:\\Users\\adam_\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\adamliang\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -57,6 +57,14 @@
               "target": "Package",
               "version": "[2.2.0, )",
               "autoReferenced": true
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[2.2.3, )"
+            },
+            "MySql.Data": {
+              "target": "Package",
+              "version": "[8.0.16, )"
             }
           },
           "imports": [

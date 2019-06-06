@@ -14,7 +14,10 @@ namespace JiraDashboard
     {
         public static void Main(string[] args)
         {
+            //Console.WriteLine("HELLO WORLD");
+            //Console.Read();
             CreateWebHostBuilder(args).Build().Run();
+
         }
 
         public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>

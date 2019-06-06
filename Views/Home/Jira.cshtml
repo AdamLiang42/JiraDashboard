@@ -1,0 +1,26 @@
+﻿
+@model IEnumerable<JiraDashboard.Models.Tasks>
+@{
+    ViewData["Title"] = "Jira";
+}
+
+<h1>Jira</h1>
+<table class="table">
+    <tr>
+        <th>Project</th>
+        <th>TasksCreatedThisMonth</th>
+        <th>Completed</th>
+        <th>TasksCreatedYTD</th>
+        <th>TasksCompletedYTD</th>
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>@Html.DisplayTextFor(modelItem => item.Project)</tr>
+        <tr>@Html.DisplayTextFor(modelItem => item.TasksCreatedThisMonth)</tr>
+        <tr>@Html.DisplayTextFor(modelItem => item.Completed)</tr>
+        <tr>@Html.DisplayTextFor(modelItem => item.TasksCreatedYTD)</tr>
+        <tr>@Html.DisplayTextFor(modelItem => item.TasksCompletedYTD)</tr>
+        <tr>@Html.DisplayTextFor(modelItem => item.Backlog)</tr>
+    }
+</table>
+

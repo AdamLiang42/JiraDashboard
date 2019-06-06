@@ -25,5 +25,11 @@ namespace JiraDashboard.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Jira()
+        {
+            JiraDBContext context = HttpContext.RequestServices.GetService(typeof(JiraDashboard.Models.JiraDBContext)) as JiraDBContext;
+            return View(context.GetTasksCreatedAndCompletedThisPeriodAndYTD());
+        }
     }
 }
