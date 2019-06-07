@@ -12,15 +12,19 @@
         <th>Completed</th>
         <th>TasksCreatedYTD</th>
         <th>TasksCompletedYTD</th>
+        <th>Backlog</th>
     </tr>
     @foreach (var item in Model)
     {
-        <tr>@Html.DisplayTextFor(modelItem => item.Project)</tr>
-        <tr>@Html.DisplayTextFor(modelItem => item.TasksCreatedThisMonth)</tr>
-        <tr>@Html.DisplayTextFor(modelItem => item.Completed)</tr>
-        <tr>@Html.DisplayTextFor(modelItem => item.TasksCreatedYTD)</tr>
-        <tr>@Html.DisplayTextFor(modelItem => item.TasksCompletedYTD)</tr>
-        <tr>@Html.DisplayTextFor(modelItem => item.Backlog)</tr>
+        <tr>
+            <th>@Html.DisplayTextFor(modelItem => item.Project)</th>
+            <th>@Html.DisplayTextFor(modelItem => item.TasksCreatedThisMonth)</th>
+            <th>@Html.DisplayTextFor(modelItem => item.Completed)</th>
+            <th>@Html.DisplayTextFor(modelItem => item.TasksCreatedYTD)</th>
+            <th>@Html.DisplayTextFor(modelItem => item.TasksCompletedYTD)</th>
+            <th>@Html.DisplayTextFor(modelItem => item.Backlog)</th>
+        </tr>
+
     }
 </table>
 

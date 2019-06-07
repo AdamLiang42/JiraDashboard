@@ -143,22 +143,23 @@ namespace JiraDashboard.Models
                 conn.Open();
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@report_start_date", new DateTime(2019, 04, 22));
-                    cmd.Parameters.AddWithValue("@report_end_date", new DateTime(2019, 05, 17));
-                    cmd.Parameters.AddWithValue("@all_time_start_date", new DateTime(2018, 05, 17));
-                    cmd.Parameters.AddWithValue("@all_time_end_date", new DateTime(2019, 05, 17));
+                    cmd.Parameters.AddWithValue("@report_start_date", new DateTime(2019, 04, 22).ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@report_end_date", new DateTime(2019, 05, 17).ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@all_time_start_date", new DateTime(2018, 05, 17).ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@all_time_end_date", new DateTime(2019, 05, 17).ToString("yyyy-MM-dd HH:mm:ss.fff"));
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
                         {
+
                             list.Add(new Tasks
                                 (
-                                reader["Project"].ToString(),
-                                Convert.ToInt32(reader["TasksCreatedThisMonth"]),
-                                Convert.ToInt32(reader["Completed"]),
-                                Convert.ToInt32(reader["TasksCreatedYTD"]),
-                                Convert.ToInt32(reader["TasksCompletedYTDrice"]),
-                                Convert.ToInt32(reader["Backlog"])
+                                reader.GetString(0),
+                                SafeGetint(reader, 1),
+                                SafeGetint(reader, 2),
+                                SafeGetint(reader, 3),
+                                SafeGetint(reader, 4),
+                                SafeGetint(reader, 5)
                                 )
                             );
                         }
@@ -167,6 +168,18 @@ namespace JiraDashboard.Models
                 
             }
             return list;
+        }
+
+        public int SafeGetint(MySqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+            {
+                return reader.GetInt32(colIndex);
+            }
+            else
+            {
+                return 0;
+            }
         }
     }
 }
