@@ -29,7 +29,9 @@ namespace JiraDashboard.Controllers
         public IActionResult Jira()
         {
             JiraDBContext context = HttpContext.RequestServices.GetService(typeof(JiraDashboard.Models.JiraDBContext)) as JiraDBContext;
-            return View(context.GetTasksCreatedAndCompletedThisPeriodAndYTD());
+            context.GetTasksCreatedAndCompletedThisPeriodAndYTD();
+            context.ProcessTasks();
+            return View(context);
         }
     }
 }

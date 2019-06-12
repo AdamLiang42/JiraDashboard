@@ -16,6 +16,9 @@
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
         }
       },
+      "Chart.js/2.8.0": {
+        "type": "package"
+      },
       "Google.Protobuf/3.6.1": {
         "type": "package",
         "dependencies": {
@@ -4818,6 +4821,19 @@
         "lib/netstandard2.0/BouncyCastle.Crypto.xml",
         "lib/xamarinios/BouncyCastle.Crypto.dll",
         "lib/xamarinios/BouncyCastle.Crypto.xml"
+      ]
+    },
+    "Chart.js/2.8.0": {
+      "sha512": "hWx4+b+rQ4w15P069hBF0y9knosxRfooFeg+ohQYam992Qb2PDY7SKOEU6Qb4Hzm4nojnHXxspreVxTe2fKRWw==",
+      "type": "package",
+      "path": "chart.js/2.8.0",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "chart.js.2.8.0.nupkg.sha512",
+        "chart.js.nuspec",
+        "content/Scripts/Chart.js",
+        "content/Scripts/Chart.min.js"
       ]
     },
     "Google.Protobuf/3.6.1": {
@@ -13119,6 +13135,7 @@
   },
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v2.2": [
+      "Chart.js >= 2.8.0",
       "Microsoft.AspNetCore.App >= 2.2.0",
       "Microsoft.AspNetCore.Razor.Design >= 2.2.0",
       "Microsoft.NETCore.App >= 2.2.0",
@@ -13133,11 +13150,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj",
+      "projectUniqueName": "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj",
       "projectName": "JiraDashboard",
-      "projectPath": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj",
+      "projectPath": "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj",
       "packagesPath": "C:\\Users\\adamliang\\.nuget\\packages\\",
-      "outputPath": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\obj\\",
+      "outputPath": "C:\\hswork\\workFile\\test\\JiraDashboard\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -13167,6 +13184,10 @@
     "frameworks": {
       "netcoreapp2.2": {
         "dependencies": {
+          "Chart.js": {
+            "target": "Package",
+            "version": "[2.8.0, )"
+          },
           "Microsoft.AspNetCore.App": {
             "suppressParent": "All",
             "target": "Package",

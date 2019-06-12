@@ -9,6 +9,19 @@ namespace JiraDashboard.Models
     {
         public string ConnectionString { get; set; }
 
+        public DateTime ReportStartDate { get; set; } = new DateTime(2019, 04, 22);
+        public DateTime ReportEnddate { get; set; } = new DateTime(2019, 05, 17);
+        public DateTime AllTimeStartDate { get; set; } = new DateTime(2018, 05, 17);
+        public DateTime AllTimeEndDate { get; set; } = new DateTime(2019, 05, 17);
+        public List<Tasks> TasksCreatedAndCompletedThisPeriodAndYTD { get; set; }
+
+        public Tasks TotalCount { get; set; }
+
+        public List<Tasks> MoreThan10 { get; set; }
+        public List<String> GraphLabel { get; set; }
+        public List<int> GraphMonthlyTask { get; set; }
+        public List<int> GraphYTDTask { get; set; }
+
         public JiraDBContext(string connectionString)
         {
             this.ConnectionString = connectionString;
@@ -19,7 +32,7 @@ namespace JiraDashboard.Models
             return new MySqlConnection(ConnectionString);
         }
 
-        public List<Tasks> GetTasksCreatedAndCompletedThisPeriodAndYTD()
+        public void GetTasksCreatedAndCompletedThisPeriodAndYTD()
         {
             List<Tasks> list = new List<Tasks>();
 
@@ -143,10 +156,10 @@ namespace JiraDashboard.Models
                 conn.Open();
                 using (MySqlCommand cmd = new MySqlCommand(sql, conn))
                 {
-                    cmd.Parameters.AddWithValue("@report_start_date", new DateTime(2019, 04, 22).ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                    cmd.Parameters.AddWithValue("@report_end_date", new DateTime(2019, 05, 17).ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                    cmd.Parameters.AddWithValue("@all_time_start_date", new DateTime(2018, 05, 17).ToString("yyyy-MM-dd HH:mm:ss.fff"));
-                    cmd.Parameters.AddWithValue("@all_time_end_date", new DateTime(2019, 05, 17).ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@report_start_date", this.ReportStartDate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@report_end_date", this.ReportEnddate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@all_time_start_date", this.AllTimeStartDate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@all_time_end_date", this.AllTimeEndDate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
                     using (var reader = cmd.ExecuteReader())
                     {
                         while (reader.Read())
@@ -165,9 +178,9 @@ namespace JiraDashboard.Models
                         }
                     }
                 }
-                
             }
-            return list;
+            this.TasksCreatedAndCompletedThisPeriodAndYTD = list;
+            //return list;
         }
 
         public int SafeGetint(MySqlDataReader reader, int colIndex)
@@ -180,6 +193,40 @@ namespace JiraDashboard.Models
             {
                 return 0;
             }
+        }
+
+        public void ProcessTasks()
+        {
+            var temp1 = 0;
+            var temp2 = 0;
+            var temp3 = 0;
+            var temp4 = 0;
+            var temp5 = 0;
+            List<Tasks> TempTasks = new List<Tasks>();
+            List<String> Lables = new List<String>();
+            List<int> Monthly = new List<int>();
+            List<int> YPD = new List<int>();
+            foreach (var item in this.TasksCreatedAndCompletedThisPeriodAndYTD)
+            {
+                temp1 += item.TasksCreatedThisMonth;
+                temp2 += item.Completed;
+                temp3 += item.TasksCreatedYTD;
+                temp4 += item.TasksCompletedYTD;
+                temp5 += item.Backlog;
+                if (item.TasksCreatedThisMonth > 10 && item.Project!= "Clinical Laboratories Service Desk")
+                {
+                    TempTasks.Add(item);
+                    Lables.Add(item.Project);
+                    Monthly.Add(item.Completed);
+                    YPD.Add(item.TasksCompletedYTD);
+                }
+            }
+            this.TotalCount = new Tasks("Total", temp1, temp2, temp3, temp4, temp5);
+            this.MoreThan10 = TempTasks;
+            this.GraphLabel = Lables;
+            this.GraphMonthlyTask = Monthly;
+            this.GraphYTDTask = YPD;
+            //this.TasksCreatedAndCompletedThisPeriodAndYTD.Add(totalCount);
         }
     }
 }

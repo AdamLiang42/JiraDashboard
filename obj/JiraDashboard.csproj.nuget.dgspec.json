@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj": {}
+    "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj": {}
   },
   "projects": {
-    "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj": {
+    "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj",
+        "projectUniqueName": "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj",
         "projectName": "JiraDashboard",
-        "projectPath": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\JiraDashboard.csproj",
+        "projectPath": "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj",
         "packagesPath": "C:\\Users\\adamliang\\.nuget\\packages\\",
-        "outputPath": "C:\\hswork\\workFile\\JiraDashboard\\JiraDashboard\\obj\\",
+        "outputPath": "C:\\hswork\\workFile\\test\\JiraDashboard\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -41,6 +41,10 @@
       "frameworks": {
         "netcoreapp2.2": {
           "dependencies": {
+            "Chart.js": {
+              "target": "Package",
+              "version": "[2.8.0, )"
+            },
             "Microsoft.AspNetCore.App": {
               "suppressParent": "All",
               "target": "Package",

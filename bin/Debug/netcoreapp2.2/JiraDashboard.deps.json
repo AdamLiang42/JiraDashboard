@@ -1,7 +1,7 @@
 {
   "runtimeTarget": {
     "name": ".NETCoreApp,Version=v2.2",
-    "signature": "1d7e68be7b1ef501a2218860e41c4b66dd0d0570"
+    "signature": "9352da02cf89629058db18c40e013fb3461911ae"
   },
   "compilationOptions": {
     "defines": [
@@ -24,6 +24,7 @@
     ".NETCoreApp,Version=v2.2": {
       "JiraDashboard/1.0.0": {
         "dependencies": {
+          "Chart.js": "2.8.0",
           "Microsoft.AspNetCore.App": "2.2.0",
           "Microsoft.AspNetCore.Razor.Design": "2.2.0",
           "Microsoft.NETCore.App": "2.2.0",
@@ -53,6 +54,7 @@
           "lib/netstandard2.0/BouncyCastle.Crypto.dll": {}
         }
       },
+      "Chart.js/2.8.0": {},
       "Google.Protobuf/3.6.1": {
         "dependencies": {
           "NETStandard.Library": "2.0.3"
@@ -3632,6 +3634,13 @@
       "sha512": "sha512-jAy3uHN1U9DpoT/TgLqDTEhlccn/4doOVxhSmmNsnoSsGfHT9Lwr634ac9D0YFujAhNw61nWF4UIpHyzv0aQww==",
       "path": "bouncycastle.netcore/1.8.3",
       "hashPath": "bouncycastle.netcore.1.8.3.nupkg.sha512"
+    },
+    "Chart.js/2.8.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-hWx4+b+rQ4w15P069hBF0y9knosxRfooFeg+ohQYam992Qb2PDY7SKOEU6Qb4Hzm4nojnHXxspreVxTe2fKRWw==",
+      "path": "chart.js/2.8.0",
+      "hashPath": "chart.js.2.8.0.nupkg.sha512"
     },
     "Google.Protobuf/3.6.1": {
       "type": "package",
