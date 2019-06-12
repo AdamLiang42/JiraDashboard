@@ -13150,11 +13150,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj",
+      "projectUniqueName": "C:\\hswork\\workFile\\jira_dashboard\\trunk\\JiraDashboard.csproj",
       "projectName": "JiraDashboard",
-      "projectPath": "C:\\hswork\\workFile\\test\\JiraDashboard\\JiraDashboard.csproj",
+      "projectPath": "C:\\hswork\\workFile\\jira_dashboard\\trunk\\JiraDashboard.csproj",
       "packagesPath": "C:\\Users\\adamliang\\.nuget\\packages\\",
-      "outputPath": "C:\\hswork\\workFile\\test\\JiraDashboard\\obj\\",
+      "outputPath": "C:\\hswork\\workFile\\jira_dashboard\\trunk\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
