@@ -30,7 +30,9 @@ namespace JiraDashboard.Controllers
         {
             JiraDBContext context = HttpContext.RequestServices.GetService(typeof(JiraDashboard.Models.JiraDBContext)) as JiraDBContext;
             context.GetTasksCreatedAndCompletedThisPeriodAndYTD();
+            context.GetLoggedHoursByProjectAndResource();
             context.ProcessTasks();
+            context.ProcessIndividualTasks();
             return View(context);
         }
     }

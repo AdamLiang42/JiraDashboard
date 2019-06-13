@@ -14,8 +14,12 @@ namespace JiraDashboard.Models
         public DateTime AllTimeStartDate { get; set; } = new DateTime(2018, 05, 17);
         public DateTime AllTimeEndDate { get; set; } = new DateTime(2019, 05, 17);
         public List<Tasks> TasksCreatedAndCompletedThisPeriodAndYTD { get; set; }
+        public List<IndividualTask> IndividualTasks { get; set; }
+        public List<List<List<IndividualTask>>> LoggedHoursByProject { get; set; } = new List<List<List<IndividualTask>>>();
+        public List<List<List<IndividualTask>>> LoggedHoursByResource { get; set; } = new List<List<List<IndividualTask>>>();
 
-        public Tasks TotalCount { get; set; }
+
+        public Tasks TotalCountProjectTasks { get; set; }
 
         public List<Tasks> MoreThan10 { get; set; }
         public List<String> GraphLabel { get; set; }
@@ -221,12 +225,241 @@ namespace JiraDashboard.Models
                     YPD.Add(item.TasksCompletedYTD);
                 }
             }
-            this.TotalCount = new Tasks("Total", temp1, temp2, temp3, temp4, temp5);
+            this.TotalCountProjectTasks = new Tasks("Total", temp1, temp2, temp3, temp4, temp5);
             this.MoreThan10 = TempTasks;
             this.GraphLabel = Lables;
             this.GraphMonthlyTask = Monthly;
             this.GraphYTDTask = YPD;
             //this.TasksCreatedAndCompletedThisPeriodAndYTD.Add(totalCount);
+        }
+
+        public void GetLoggedHoursByProjectAndResource()
+        {
+            List<IndividualTask> list = new List<IndividualTask>();
+
+            using (MySqlConnection conn = GetConnection())
+            {
+
+                string sql = @"
+                    Select 
+                    HoursLoggedYTD.Resource, HoursLoggedYTD.Project, HoursLoggedWeek1.TotalLoggedHoursWeek1, HoursLoggedWeek2.TotalLoggedHoursWeek2,
+                     HoursLoggedWeek3.TotalLoggedHoursWeek3,  HoursLoggedWeek4.TotalLoggedHoursWeek4,
+                      HoursLoggedMonth.TotalLoggedHoursMonth,
+                    HoursLoggedYTD.TotalLoggedHoursTasksThisProject
+                    from 
+                    (
+                    select author as 'Resource', jiradb.project.pname as 'Project', sum(jiradb.worklog.timeworked/3600)  as 'TotalLoggedHoursTasksThisProject'
+                    from jiradb.worklog, jiradb.jiraissue, jiradb.project 
+                    where 
+                    jiradb.worklog.issueid = jiradb.jiraissue.id and
+                    jiradb.jiraissue.PROJECT = jiradb.project.id and
+                    worklog.STARTDATE > @report_start_date_ytd and 
+                    worklog.STARTDATE < @report_end_date_ytd
+                    group by AUTHOR,jiradb.project.pname
+                    )
+                    as HoursLoggedYTD
+                    LEFT OUTER JOIN
+                    (
+                    select author as 'Resource', jiradb.project.pname as 'Project', sum(jiradb.worklog.timeworked/3600)  as 'TotalLoggedHoursWeek1'
+                    from jiradb.worklog, jiradb.jiraissue, jiradb.project 
+                    where 
+                    jiradb.worklog.issueid = jiradb.jiraissue.id and
+                    jiradb.jiraissue.PROJECT = jiradb.project.id and
+                    worklog.STARTDATE >= @report_start_date and
+                    worklog.STARTDATE <= DATE_ADD(@report_start_date, INTERVAL 1 WEEK)   
+                    group by AUTHOR,jiradb.project.pname
+                    )
+                    as HoursLoggedWeek1
+                    ON HoursLoggedYTD.Resource = HoursLoggedWeek1.Resource and HoursLoggedYTD.project = HoursLoggedWeek1.Project 
+                    LEFT OUTER JOIN
+                    (
+                    select author as 'Resource', jiradb.project.pname as 'Project', sum(jiradb.worklog.timeworked/3600)  as 'TotalLoggedHoursWeek2'
+                    from jiradb.worklog, jiradb.jiraissue, jiradb.project 
+                    where 
+                    jiradb.worklog.issueid = jiradb.jiraissue.id and
+                    jiradb.jiraissue.PROJECT = jiradb.project.id and
+                    worklog.STARTDATE > DATE_ADD(@report_start_date, INTERVAL 1 WEEK)  and  
+                    worklog.STARTDATE <= DATE_ADD(@report_start_date, INTERVAL 2 WEEK)   
+                    group by AUTHOR,jiradb.project.pname
+                    )
+                    as HoursLoggedWeek2
+                    ON HoursLoggedYTD.Resource = HoursLoggedWeek2.Resource and HoursLoggedYTD.project = HoursLoggedWeek2.Project 
+                    LEFT OUTER JOIN
+                    (
+                    select author as 'Resource', jiradb.project.pname as 'Project', sum(jiradb.worklog.timeworked/3600)  as 'TotalLoggedHoursWeek3'
+                    from jiradb.worklog, jiradb.jiraissue, jiradb.project 
+                    where 
+                    jiradb.worklog.issueid = jiradb.jiraissue.id and
+                    jiradb.jiraissue.PROJECT = jiradb.project.id and
+                    worklog.STARTDATE > DATE_ADD(@report_start_date, INTERVAL 2 WEEK)  and  
+                    worklog.STARTDATE <= DATE_ADD(@report_start_date, INTERVAL 3 WEEK)   
+                    group by AUTHOR,jiradb.project.pname
+                    )
+                    as HoursLoggedWeek3
+                    ON HoursLoggedYTD.Resource = HoursLoggedWeek3.Resource and HoursLoggedYTD.project = HoursLoggedWeek3.Project 
+                    LEFT OUTER JOIN
+                    (
+                    select author as 'Resource', jiradb.project.pname as 'Project', sum(jiradb.worklog.timeworked/3600)  as 'TotalLoggedHoursWeek4'
+                    from jiradb.worklog, jiradb.jiraissue, jiradb.project 
+                    where 
+                    jiradb.worklog.issueid = jiradb.jiraissue.id and
+                    jiradb.jiraissue.PROJECT = jiradb.project.id and
+                    worklog.STARTDATE > DATE_ADD(@report_start_date, INTERVAL 3 WEEK)  and  
+                    worklog.STARTDATE <= DATE_ADD(@report_start_date, INTERVAL 4 WEEK)   
+                    group by AUTHOR,jiradb.project.pname
+                    )
+                    as HoursLoggedWeek4
+                    ON HoursLoggedYTD.Resource = HoursLoggedWeek4.Resource and HoursLoggedYTD.project = HoursLoggedWeek4.Project 
+                    LEFT OUTER JOIN
+                    (
+                    select author as 'Resource', jiradb.project.pname as 'Project', sum(jiradb.worklog.timeworked/3600)  as 'TotalLoggedHoursMonth'
+                    from jiradb.worklog, jiradb.jiraissue, jiradb.project 
+                    where 
+                    jiradb.worklog.issueid = jiradb.jiraissue.id and
+                    jiradb.jiraissue.PROJECT = jiradb.project.id and
+                    worklog.STARTDATE >= @report_start_date and
+                    worklog.STARTDATE <= DATE_ADD(@report_start_date, INTERVAL 4 WEEK)   
+                    group by AUTHOR,jiradb.project.pname
+                    )
+                    as HoursLoggedMonth
+                    ON HoursLoggedYTD.Resource = HoursLoggedMonth.Resource and HoursLoggedYTD.project = HoursLoggedMonth.Project 
+                    where
+                    HoursLoggedYTD.Resource in 
+                     (SELECT lower_child_name FROM 
+                      jiradb.cwd_membership 
+                      where
+                      parent_name = 'PATH-IT Staff')
+  
+                    Order by 
+                    HoursLoggedYTD.Project;";
+                conn.Open();
+                using (MySqlCommand cmd = new MySqlCommand(sql, conn))
+                {
+                    cmd.Parameters.AddWithValue("@report_start_date", this.ReportStartDate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@report_end_date", this.ReportEnddate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@report_start_date_ytd", this.AllTimeStartDate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    cmd.Parameters.AddWithValue("@report_end_date_ytd", this.AllTimeEndDate.ToString("yyyy-MM-dd HH:mm:ss.fff"));
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+
+                            list.Add(new IndividualTask
+                                (
+                                reader.GetString(0), 
+                                reader.GetString(1),
+                                SafeGetDouble(reader, 2),
+                                SafeGetDouble(reader, 3),
+                                SafeGetDouble(reader, 4),
+                                SafeGetDouble(reader, 5),
+                                SafeGetDouble(reader, 6),
+                                SafeGetDouble(reader, 7)
+                                )
+                            );
+                        }
+                    }
+                }
+            }
+            this.IndividualTasks = list;
+        }
+        public double SafeGetDouble(MySqlDataReader reader, int colIndex)
+        {
+            if (!reader.IsDBNull(colIndex))
+            {
+                return reader.GetDouble(colIndex);
+            }
+            else
+            {
+                return 0.0;
+            }
+        }
+
+        public void ProcessIndividualTasks()
+        {
+            this.LoggedHoursByProject = new List<List<List<IndividualTask>>>();
+            this.LoggedHoursByResource = new List<List<List<IndividualTask>>>();
+            foreach (IndividualTask item in this.IndividualTasks)
+            {
+                List<List<IndividualTask>> ByProject = InLoggedHoursByProject(item);
+                List<List<IndividualTask>> ByResource = InLoggedHoursByResource(item);
+
+                if (ByProject != null)
+                {
+                    AddITToGroup(ByProject, item);
+                }
+                else
+                {
+                    IndividualTask newItem = new IndividualTask
+                    (
+                        item.Resource,
+                        item.Project,
+                        item.TotalLoggedHoursWeek1,
+                        item.TotalLoggedHoursWeek2,
+                        item.TotalLoggedHoursWeek3,
+                        item.TotalLoggedHoursWeek4,
+                        item.TotalLoggedHoursMonth,
+                        item.TotalLoggedHoursTasksThisProject
+                    );
+                    this.LoggedHoursByProject.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
+                }
+                if (ByResource != null)
+                {
+                    AddITToGroup(ByResource, item);
+                }
+                else
+                {
+                    IndividualTask newItem = new IndividualTask
+                    (
+                        item.Resource,
+                        item.Project,
+                        item.TotalLoggedHoursWeek1,
+                        item.TotalLoggedHoursWeek2,
+                        item.TotalLoggedHoursWeek3,
+                        item.TotalLoggedHoursWeek4,
+                        item.TotalLoggedHoursMonth,
+                        item.TotalLoggedHoursTasksThisProject
+                    );
+
+                    this.LoggedHoursByResource.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
+                }
+            }
+        }
+
+
+
+
+        public void AddITToGroup(List<List<IndividualTask>> set, IndividualTask item)
+        {
+            set[1].Add(item);
+            set[0][0].TotalLoggedHoursWeek1 += item.TotalLoggedHoursWeek1;
+            set[0][0].TotalLoggedHoursWeek2 += item.TotalLoggedHoursWeek2;
+            set[0][0].TotalLoggedHoursWeek3 += item.TotalLoggedHoursWeek3;
+            set[0][0].TotalLoggedHoursWeek4 += item.TotalLoggedHoursWeek4;
+            set[0][0].TotalLoggedHoursMonth = set[0][0].TotalLoggedHoursMonth + item.TotalLoggedHoursMonth;
+            set[0][0].TotalLoggedHoursTasksThisProject += item.TotalLoggedHoursTasksThisProject;
+        }
+        public List<List<IndividualTask>> InLoggedHoursByResource(IndividualTask item)
+        {
+            foreach (List<List<IndividualTask>> set in this.LoggedHoursByResource)
+            {
+                if (item.Resource == set[0][0].Resource)
+                {
+                    return set;
+                }
+            }
+            return null;
+        }
+
+        public List<List<IndividualTask>> InLoggedHoursByProject(IndividualTask item)
+        {
+            foreach (List<List<IndividualTask>> set in this.LoggedHoursByProject)
+            {
+                if (item.Project == set[0][0].Project)
+                {
+                    return set;
+                }
+            }
+            return null;
         }
     }
 }
