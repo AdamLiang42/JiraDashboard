@@ -8,23 +8,26 @@ namespace JiraDashboard.Models
     public class JiraDBContext
     {
         public string ConnectionString { get; set; }
-
-        public DateTime ReportStartDate { get; set; } = new DateTime(2019, 04, 22);
-        public DateTime ReportEnddate { get; set; } = new DateTime(2019, 05, 17);
-        public DateTime AllTimeStartDate { get; set; } = new DateTime(2018, 05, 17);
-        public DateTime AllTimeEndDate { get; set; } = new DateTime(2019, 05, 17);
+        public DateTime ReportStartDate { get; set; } = new DateTime(2019, 05, 20);
+        public DateTime ReportEnddate { get; set; } = new DateTime(2019, 06, 14);
+        public DateTime AllTimeStartDate { get; set; } = new DateTime(2018, 06, 14);
+        public DateTime AllTimeEndDate { get; set; } = new DateTime(2019, 06, 14);
         public List<Tasks> TasksCreatedAndCompletedThisPeriodAndYTD { get; set; }
         public List<IndividualTask> IndividualTasks { get; set; }
         public List<List<List<IndividualTask>>> LoggedHoursByProject { get; set; } = new List<List<List<IndividualTask>>>();
         public List<List<List<IndividualTask>>> LoggedHoursByResource { get; set; } = new List<List<List<IndividualTask>>>();
-
-
         public Tasks TotalCountProjectTasks { get; set; }
-
         public List<Tasks> MoreThan10 { get; set; }
         public List<String> GraphLabel { get; set; }
         public List<int> GraphMonthlyTask { get; set; }
         public List<int> GraphYTDTask { get; set; }
+        public List<int> ByResource { get; set; }
+        public List<int> ByProject { get; set; }
+        public List<String> SelectedProject { get; set; }
+        public List<String> SelectedResource { get; set; }
+        public List<List<List<IndividualTask>>> LoggedHoursByProjectDisplay { get; set; } = new List<List<List<IndividualTask>>>();
+        public List<List<List<IndividualTask>>> LoggedHoursByResourceDisplay { get; set; } = new List<List<List<IndividualTask>>>();
+
 
         public JiraDBContext(string connectionString)
         {
@@ -217,7 +220,7 @@ namespace JiraDashboard.Models
                 temp3 += item.TasksCreatedYTD;
                 temp4 += item.TasksCompletedYTD;
                 temp5 += item.Backlog;
-                if (item.TasksCreatedThisMonth > 10 && item.Project!= "Clinical Laboratories Service Desk")
+                if (item.TasksCreatedThisMonth > 20 && item.Project!= "Clinical Laboratories Service Desk")
                 {
                     TempTasks.Add(item);
                     Lables.Add(item.Project);
@@ -239,7 +242,6 @@ namespace JiraDashboard.Models
 
             using (MySqlConnection conn = GetConnection())
             {
-
                 string sql = @"
                     Select 
                     HoursLoggedYTD.Resource, HoursLoggedYTD.Project, HoursLoggedWeek1.TotalLoggedHoursWeek1, HoursLoggedWeek2.TotalLoggedHoursWeek2,
@@ -348,12 +350,12 @@ namespace JiraDashboard.Models
                                 (
                                 reader.GetString(0), 
                                 reader.GetString(1),
-                                SafeGetDouble(reader, 2),
-                                SafeGetDouble(reader, 3),
-                                SafeGetDouble(reader, 4),
-                                SafeGetDouble(reader, 5),
-                                SafeGetDouble(reader, 6),
-                                SafeGetDouble(reader, 7)
+                                SafeGetint(reader, 2),
+                                SafeGetint(reader, 3),
+                                SafeGetint(reader, 4),
+                                SafeGetint(reader, 5),
+                                SafeGetint(reader, 6),
+                                SafeGetint(reader, 7)
                                 )
                             );
                         }
@@ -361,17 +363,6 @@ namespace JiraDashboard.Models
                 }
             }
             this.IndividualTasks = list;
-        }
-        public double SafeGetDouble(MySqlDataReader reader, int colIndex)
-        {
-            if (!reader.IsDBNull(colIndex))
-            {
-                return reader.GetDouble(colIndex);
-            }
-            else
-            {
-                return 0.0;
-            }
         }
 
         public void ProcessIndividualTasks()
@@ -423,10 +414,9 @@ namespace JiraDashboard.Models
                     this.LoggedHoursByResource.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
                 }
             }
+            this.LoggedHoursByProjectDisplay = this.LoggedHoursByProject;
+            this.LoggedHoursByResourceDisplay = this.LoggedHoursByResource;
         }
-
-
-
 
         public void AddITToGroup(List<List<IndividualTask>> set, IndividualTask item)
         {
@@ -460,6 +450,32 @@ namespace JiraDashboard.Models
                 }
             }
             return null;
+        }
+
+        public void ProcessProject()
+        {
+            var temp = new List<List<List<IndividualTask>>> { };
+            foreach (var item in this.LoggedHoursByProject)
+            {
+                if (this.SelectedProject.Contains(item[0][0].Project))
+                {
+                    temp.Add(item);
+                }
+            }
+            this.LoggedHoursByProjectDisplay = temp;
+        }
+
+        public void ProcessResource()
+        {
+            var temp = new List<List<List<IndividualTask>>> { };
+            foreach (var item in this.LoggedHoursByResource)
+            {
+                if (this.SelectedProject.Contains(item[0][0].Resource))
+                {
+                    temp.Add(item);
+                }
+            }
+            this.LoggedHoursByResourceDisplay = temp;
         }
     }
 }

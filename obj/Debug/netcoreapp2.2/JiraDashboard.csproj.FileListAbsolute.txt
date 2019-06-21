@@ -96,7 +96,6 @@ C:\hswork\workFile\jira_dashboard\trunk\bin\Debug\netcoreapp2.2\JiraDashboard.dl
 C:\hswork\workFile\jira_dashboard\trunk\bin\Debug\netcoreapp2.2\JiraDashboard.pdb
 C:\hswork\workFile\jira_dashboard\trunk\bin\Debug\netcoreapp2.2\JiraDashboard.Views.dll
 C:\hswork\workFile\jira_dashboard\trunk\bin\Debug\netcoreapp2.2\JiraDashboard.Views.pdb
-C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.csprojAssemblyReference.cache
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.csproj.CoreCompileInputs.cache
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.RazorAssemblyInfo.cache
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.RazorAssemblyInfo.cs
@@ -120,3 +119,4 @@ C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.Vi
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.dll
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.pdb
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.csproj.CopyComplete
+C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.csprojAssemblyReference.cache

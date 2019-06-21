@@ -54,3 +54,21 @@ body {
   height: 60px;
   line-height: 60px; /* Vertically center the text there */
 }
+
+
+#foo td:first-child {
+    width: 250px;
+}
+
+
+#foo td:nth-child(2) {
+    width: 80px;
+}
+
+#foo td:nth-child(3) {
+    width: 80px;
+}
+
+#foo td:last-child {
+    width: 110px;
+}

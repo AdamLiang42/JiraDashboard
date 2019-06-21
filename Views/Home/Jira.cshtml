@@ -53,9 +53,9 @@
     </style>
 </head>
 
-<div style="float: left; width:680px">
+<div style="float: left; width:100%; margin-left:10px">
     <h2>Project Tasks (Completed and Current Backlog)</h2>
-    <div style="text-align: center; width:680px">
+    <div style="text-align: center; width:100%">
         <canvas id="barcanvas"></canvas>
     </div>
     <table class="table-bordered">
@@ -82,7 +82,7 @@
             <td>@Html.DisplayTextFor(modelItem => item.Backlog)</td>
         </tr>
     }
-        <tr style="background-color:#DDEBF7;style=" width:250px"">
+        <tr style="background-color:#DDEBF7;width:250px">
             <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.Project)</th>
             <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.TasksCreatedThisMonth)</th>
             <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.Completed)</th>
@@ -92,95 +92,5 @@
         </tr>
     </table>
 </div>
-
-
-<div style="float: left;">
-    <h2>Resource Engagement On Projects (Based on Logged Hours - Last 4 weeks)</h2>
-
-        <div style="width:460px;float: left;">
-            <table class="table-responsive">
-                <tr>
-                    <th style="background-color:#DDEBF7; width:250px">Project</th>
-                    <th style="background-color:#DDEBF7; width:80px">Resources</th>
-                    <th style="background-color:#DDEBF7; width:110px">Total Logged Hours(Month)</th>
-                </tr>
-            </table>
-            @foreach (var item in Model.LoggedHoursByProject)
-    {
-            <details>
-                <summary>
-                    <table class="table-bordered">
-                        <tr>
-                            <td style="width:250px">+@Html.DisplayTextFor(modelItem => item[0][0].Project)</td>
-                            <td style="width:80px">@Html.DisplayTextFor(modelItem => item[1].Count)</td>
-                            <td style="width:110px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursMonth)</td>
-                        </tr>
-                    </table>
-                </summary>
-                <table class="table-responsive">
-                    @foreach (var i in item[1])
-            {
-                    <tr>
-                        <td style="width:250px">@Html.DisplayTextFor(modelItem => i.Resource)</td>
-                        <td style="width:80px">1</td>
-                        <td style="width:110px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursMonth)</td>
-                    </tr>
-            }
-                </table>
-            </details>
-    }
-        </div>
-
-
-        <div style="width:760px; float: left;">
-            <table class="table-responsive">
-                <tr>
-                    <th style="background-color:#DDEBF7; width:200px">Resources</th>
-                    <th style="background-color:#DDEBF7; width:60px">Project</th>
-                    <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week1)</th>
-                    <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week2)</th>
-                    <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week3)</th>
-                    <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week4)</th>
-                    <th style="background-color:#DDEBF7; width:100px">Total Logged Hrs(Month)</th>
-                </tr>
-            </table>
-            @foreach (var item in Model.LoggedHoursByResource)
-    {
-            <details>
-                <summary>
-                    <table class="table-bordered">
-                        <tr>
-                            <td style="width:200px">+@Html.DisplayTextFor(modelItem => item[0][0].Resource)</td>
-                            <td style="width:60px">@Html.DisplayTextFor(modelItem => item[1].Count)</td>
-                            <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek1)</td>
-                            <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek2)</td>
-                            <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek3)</td>
-                            <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek4)</td>
-                            <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursMonth)</td>
-                        </tr>
-                    </table>
-                </summary>
-                <table class="table-responsive">
-                    @foreach (var i in item[1])
-            {
-                    <tr>
-                        <td style="width:200px">@Html.DisplayTextFor(modelItem => i.Project)</td>
-                        <td style="width:60px">1</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek1)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek2)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek3)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek4)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursMonth)</td>
-                    </tr>
-            }
-                </table>
-            </details>
-    }
-        </div>
-
-</div>
-
-
-
 
 
