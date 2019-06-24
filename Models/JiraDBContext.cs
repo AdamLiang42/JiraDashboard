@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JiraDashboard.Models
 {
@@ -14,8 +15,8 @@ namespace JiraDashboard.Models
         public DateTime AllTimeEndDate { get; set; } = new DateTime(2019, 06, 14);
         public List<Tasks> TasksCreatedAndCompletedThisPeriodAndYTD { get; set; }
         public List<IndividualTask> IndividualTasks { get; set; }
-        public List<List<List<IndividualTask>>> LoggedHoursByProject { get; set; } = new List<List<List<IndividualTask>>>();
-        public List<List<List<IndividualTask>>> LoggedHoursByResource { get; set; } = new List<List<List<IndividualTask>>>();
+        public List<List<List<IndividualTask>>> LoggedHoursByProject { get; set; }
+        public List<List<List<IndividualTask>>> LoggedHoursByResource { get; set; }
         public Tasks TotalCountProjectTasks { get; set; }
         public List<Tasks> MoreThan10 { get; set; }
         public List<String> GraphLabel { get; set; }
@@ -25,8 +26,10 @@ namespace JiraDashboard.Models
         public List<int> ByProject { get; set; }
         public List<String> SelectedProject { get; set; }
         public List<String> SelectedResource { get; set; }
-        public List<List<List<IndividualTask>>> LoggedHoursByProjectDisplay { get; set; } = new List<List<List<IndividualTask>>>();
-        public List<List<List<IndividualTask>>> LoggedHoursByResourceDisplay { get; set; } = new List<List<List<IndividualTask>>>();
+        public List<List<List<IndividualTask>>> LoggedHoursByProjectDisplay { get; set; }
+        public List<List<List<IndividualTask>>> LoggedHoursByResourceDisplay { get; set; }
+        public List<int> EngagementByProjectTotal { get; set; }
+        public List<int> EngagementByResourceTotal { get; set; }
 
 
         public JiraDBContext(string connectionString)
@@ -186,6 +189,7 @@ namespace JiraDashboard.Models
                     }
                 }
             }
+            list = list.OrderByDescending(x => x.Backlog).ToList();
             this.TasksCreatedAndCompletedThisPeriodAndYTD = list;
             //return list;
         }
@@ -362,6 +366,7 @@ namespace JiraDashboard.Models
                     }
                 }
             }
+
             this.IndividualTasks = list;
         }
 
@@ -414,8 +419,23 @@ namespace JiraDashboard.Models
                     this.LoggedHoursByResource.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
                 }
             }
-            this.LoggedHoursByProjectDisplay = this.LoggedHoursByProject;
-            this.LoggedHoursByResourceDisplay = this.LoggedHoursByResource;
+
+            this.LoggedHoursByProjectDisplay = this.LoggedHoursByProject.OrderByDescending(x => x[0][0].TotalLoggedHoursMonth).ToList();
+            this.LoggedHoursByResourceDisplay = this.LoggedHoursByResource.OrderByDescending(x => x[0][0].TotalLoggedHoursMonth).ToList();
+            CountTotalByProject();
+            CountTotalByResource();
+            var TempSelectedProject = new List<string> { };
+            foreach (var item in this.LoggedHoursByProject)
+            {
+                TempSelectedProject.Add(item[0][0].Project);
+            }
+            var TempSelectedResource = new List<string> { };
+            foreach (var item in this.LoggedHoursByResource)
+            {
+                TempSelectedResource.Add(item[0][0].Resource);
+            }
+            this.SelectedProject = TempSelectedProject;
+            this.SelectedResource = TempSelectedResource;
         }
 
         public void AddITToGroup(List<List<IndividualTask>> set, IndividualTask item)
@@ -462,7 +482,9 @@ namespace JiraDashboard.Models
                     temp.Add(item);
                 }
             }
+            temp = temp.OrderByDescending(x => x[0][0].TotalLoggedHoursMonth).ToList();
             this.LoggedHoursByProjectDisplay = temp;
+            CountTotalByProject();
         }
 
         public void ProcessResource()
@@ -475,7 +497,35 @@ namespace JiraDashboard.Models
                     temp.Add(item);
                 }
             }
+            temp = temp.OrderByDescending(x => x[0][0].TotalLoggedHoursMonth).ToList();
             this.LoggedHoursByResourceDisplay = temp;
+            CountTotalByResource();
+        }
+
+        public void CountTotalByProject()
+        {
+            var temp = new List<int> { 0, 0 };
+            foreach (var item in this.LoggedHoursByProjectDisplay)
+            {
+                temp[0] += item[1].Count;
+                temp[1] += item[0][0].TotalLoggedHoursMonth;
+            }
+            this.EngagementByProjectTotal = temp;
+        }
+
+        public void CountTotalByResource()
+        {
+            var temp = new List<int> { 0, 0, 0, 0, 0, 0 };
+            foreach (var item in this.LoggedHoursByResourceDisplay)
+            {
+                temp[0] += item[1].Count;
+                temp[1] += item[0][0].TotalLoggedHoursWeek1;
+                temp[2] += item[0][0].TotalLoggedHoursWeek2;
+                temp[3] += item[0][0].TotalLoggedHoursWeek3;
+                temp[4] += item[0][0].TotalLoggedHoursWeek4;
+                temp[5] += item[0][0].TotalLoggedHoursMonth;
+            }
+            this.EngagementByResourceTotal = temp;
         }
     }
 }

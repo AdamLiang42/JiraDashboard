@@ -9,14 +9,14 @@ namespace JiraDashboard.Models
     {
         public String Resource { get; set; }
         public String Project { get; set; }
-        public double TotalLoggedHoursWeek1 { get; set; }
-        public double TotalLoggedHoursWeek2 { get; set; }
-        public double TotalLoggedHoursWeek3 { get; set; }
-        public double TotalLoggedHoursWeek4 { get; set; }
-        public double TotalLoggedHoursMonth { get; set; }
-        public double TotalLoggedHoursTasksThisProject { get; set; }
+        public int TotalLoggedHoursWeek1 { get; set; }
+        public int TotalLoggedHoursWeek2 { get; set; }
+        public int TotalLoggedHoursWeek3 { get; set; }
+        public int TotalLoggedHoursWeek4 { get; set; }
+        public int TotalLoggedHoursMonth { get; set; }
+        public int TotalLoggedHoursTasksThisProject { get; set; }
 
-        public IndividualTask(String Resource, String Project, double TotalLoggedHoursWeek1, double TotalLoggedHoursWeek2, double TotalLoggedHoursWeek3, double TotalLoggedHoursWeek4, double TotalLoggedHoursMonth, double TotalLoggedHoursTasksThisProject)
+        public IndividualTask(String Resource, String Project, int TotalLoggedHoursWeek1, int TotalLoggedHoursWeek2, int TotalLoggedHoursWeek3, int TotalLoggedHoursWeek4, int TotalLoggedHoursMonth, int TotalLoggedHoursTasksThisProject)
         {
             this.Resource = Resource;
             this.Project = Project;

@@ -55,7 +55,7 @@
     </head>
 <!--project tasks graph and table-->
 <div style="float: left; width:680px; margin-left:10px">
-    <h2>Project Tasks (Completed and Current Backlog)</h2>
+    <h2>Project Tasks (Completed and Current Backlog</h2>
     <div style="text-align: center; width:680px">
         <canvas id="barcanvas"></canvas>
     </div>
@@ -76,21 +76,21 @@
         @foreach (var item in Model.TasksCreatedAndCompletedThisPeriodAndYTD)
         {
         <tr>
-            <td>@Html.DisplayTextFor(modelItem => item.Project)</td>
-            <td>@Html.DisplayTextFor(modelItem => item.TasksCreatedThisMonth)</td>
-            <td>@Html.DisplayTextFor(modelItem => item.Completed)</td>
-            <td>@Html.DisplayTextFor(modelItem => item.TasksCreatedYTD)</td>
-            <td>@Html.DisplayTextFor(modelItem => item.TasksCompletedYTD)</td>
-            <td>@Html.DisplayTextFor(modelItem => item.Backlog)</td>
+            <td>@item.Project</td>
+            <td>@item.TasksCreatedThisMonth</td>
+            <td>@item.Completed</td>
+            <td>@item.TasksCreatedYTD</td>
+            <td>@item.TasksCompletedYTD</td>
+            <td>@item.Backlog</td>
         </tr>
         }
         <tr style="background-color:#DDEBF7;style=width:250px">
-            <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.Project)</th>
-            <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.TasksCreatedThisMonth)</th>
-            <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.Completed)</th>
-            <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.TasksCreatedYTD)</th>
-            <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.TasksCompletedYTD)</th>
-            <th>@Html.DisplayTextFor(modelItem => Model.TotalCountProjectTasks.Backlog)</th>
+            <th>@Model.TotalCountProjectTasks.Project</th>
+            <th>@Model.TotalCountProjectTasks.TasksCreatedThisMonth</th>
+            <th>@Model.TotalCountProjectTasks.Completed</th>
+            <th>@Model.TotalCountProjectTasks.TasksCreatedYTD</th>
+            <th>@Model.TotalCountProjectTasks.TasksCompletedYTD</th>
+            <th>@Model.TotalCountProjectTasks.Backlog</th>
         </tr>
     </table>
     <div style="height:100px">&nbsp;</div>
@@ -98,7 +98,7 @@
 
 <!--engagement by resources and by project-->
 <div style="float: left;">
-    <h2>Resource Engagement On Projects (Based on Logged Hours - Last 4 weeks)</h2>
+    <h2 style="text-align:center">Resource Engagement On Projects (Based on Logged Hours - Last 4 weeks)</h2>
 
     <div style="width:440px;float: left;">
         <table class="table-responsive">
@@ -119,9 +119,9 @@
             <summary>
                 <table class="table-active">
                     <tr>
-                        <td style="width:250px">+@Html.DisplayTextFor(modelItem => item[0][0].Project)</td>
-                        <td style="width:80px">@Html.DisplayTextFor(modelItem => item[1].Count)</td>
-                        <td style="width:110px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursMonth)</td>
+                        <td style="width:250px">+@item[0][0].Project</td>
+                        <td style="width:80px">@item[1].Count</td>
+                        <td style="width:110px">@item[0][0].TotalLoggedHoursMonth</td>
                     </tr>
                 </table>
             </summary>
@@ -129,14 +129,21 @@
                 @foreach (var i in item[1])
                     {
                 <tr>
-                    <td style="width:250px">@Html.DisplayTextFor(modelItem => i.Resource)</td>
+                    <td style="width:250px">@i.Resource</td>
                     <td style="width:80px">1</td>
-                    <td style="width:110px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursMonth)</td>
+                    <td style="width:110px">@i.TotalLoggedHoursMonth</td>
                 </tr>
                     }
             </table>
         </details>
         }
+        <table class="table-responsive">
+            <tr>
+                <th style="background-color:#DDEBF7; width:250px">Grand Total</th>
+                <th style="background-color:#DDEBF7; width:80px">@Model.EngagementByProjectTotal[0]</th>
+                <th style="background-color:#DDEBF7; width:110px">@Model.EngagementByProjectTotal[1]</th>
+            </tr>
+        </table>
     </div>
 
 
@@ -165,13 +172,13 @@
             <summary>
                 <table class="table-active">
                     <tr>
-                        <td style="width:200px">+@Html.DisplayTextFor(modelItem => item[0][0].Resource)</td>
-                        <td style="width:60px">@Html.DisplayTextFor(modelItem => item[1].Count)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek1)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek2)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek3)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursWeek4)</td>
-                        <td style="width:100px">@Html.DisplayTextFor(modelItem => item[0][0].TotalLoggedHoursMonth)</td>
+                        <td style="width:200px">+@item[0][0].Resource</td>
+                        <td style="width:60px">@item[1].Count</td>
+                        <td style="width:100px">@item[0][0].TotalLoggedHoursWeek1</td>
+                        <td style="width:100px">@item[0][0].TotalLoggedHoursWeek2</td>
+                        <td style="width:100px">@item[0][0].TotalLoggedHoursWeek3</td>
+                        <td style="width:100px">@item[0][0].TotalLoggedHoursWeek4</td>
+                        <td style="width:100px">@item[0][0].TotalLoggedHoursMonth</td>
                     </tr>
                 </table>
             </summary>
@@ -179,18 +186,30 @@
                 @foreach (var i in item[1])
                     {
                 <tr>
-                    <td style="width:200px">@Html.DisplayTextFor(modelItem => i.Project)</td>
+                    <td style="width:200px">@i.Project</td>
                     <td style="width:60px">1</td>
-                    <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek1)</td>
-                    <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek2)</td>
-                    <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek3)</td>
-                    <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursWeek4)</td>
-                    <td style="width:100px">@Html.DisplayTextFor(modelItem => i.TotalLoggedHoursMonth)</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek1</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek2</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek3</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek4</td>
+                    <td style="width:100px">@i.TotalLoggedHoursMonth</td>
                 </tr>
                     }
             </table>
         </details>
         }
+
+        <table class="table-responsive">
+            <tr>
+                <th style="background-color:#DDEBF7; width:200px">Grand Total</th>
+                <th style="background-color:#DDEBF7; width:60px">@Model.EngagementByResourceTotal[0]</th>
+                <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[1]</th>
+                <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[2]</th>
+                <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[3]</th>
+                <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[4]</th>
+                <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[5]</th>
+            </tr>
+        </table>
     </div>
 </div>
 
@@ -216,7 +235,7 @@
             <div>
                 <label>
                     <input class="resource_checkbox" type="checkbox" value="@item[0][0].Resource" name="resource">
-                    @Html.DisplayTextFor(modelItem => item[0][0].Resource)
+                    @item[0][0].Resource
                 </label>
             </div>
                 }
@@ -250,7 +269,7 @@
                 {
                 <label>
                     <input class="project_checkbox" type="checkbox" value="@item[0][0].Project" name="project">
-                    @Html.DisplayTextFor(modelItem => item[0][0].Project)
+                    @item[0][0].Project
                 </label>
                 <br />
                 }
@@ -306,17 +325,37 @@
         });
 
         $('#projectFilterButton').on('click', function () {
-            $('.project_checkbox').each(function(){
-                    this.checked = false;
+            $('.project_checkbox').each(function () {
+                if ((@Json.Serialize(Model.SelectedProject)).includes(this.value)) {
+                    this.checked = true;
+                }
+                else {
+                    this.checked = false
+                }
             });
-            $('#project_select_all').prop('checked', false);
+            if ((@Json.Serialize(Model.SelectedProject)).length == (@Json.Serialize(Model.LoggedHoursByProject)).length) {
+                $('#project_select_all').prop('checked', true);
+            }
+            else {
+                $('#project_select_all').prop('checked', false);
+            }
         });
 
         $('#resourceFilterButton').on('click', function () {
             $('.resource_checkbox').each(function(){
-                    this.checked = false;
+                if ((@Json.Serialize(Model.SelectedResource)).includes(this.value)) {
+                    this.checked = true;
+                }
+                else {
+                    this.checked = false
+                }
             });
-            $('#resource_select_all').prop('checked', false);
+            if ((@Json.Serialize(Model.SelectedResource)).length == (@Json.Serialize(Model.LoggedHoursByResource)).length) {
+                $('#resource_select_all').prop('checked', true);
+            }
+            else {
+                $('#resource_select_all').prop('checked', false);
+            }
         });
     });
 </script>
