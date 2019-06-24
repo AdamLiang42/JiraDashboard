@@ -470,7 +470,7 @@ namespace JiraDashboard.Models
             var temp = new List<List<List<IndividualTask>>> { };
             foreach (var item in this.LoggedHoursByResource)
             {
-                if (this.SelectedProject.Contains(item[0][0].Resource))
+                if (this.SelectedResource.Contains(item[0][0].Resource))
                 {
                     temp.Add(item);
                 }

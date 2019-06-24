@@ -197,7 +197,7 @@
 
 <!--resource filter-->
 
-<div class="modal fade" id="resourceFilter" tabindex="-1" role="dialog" aria-labelledby="resourceFilterLabel" aria-hidden="true">
+<form class="modal fade" method="post" id="resourceFilter" tabindex="-1" role="dialog" aria-labelledby="resourceFilterLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -207,28 +207,31 @@
                 </button>
             </div>
             <div class="modal-body">
-                <input id="resource_select_all" type="checkbox">
-                <label>(select all)</label>
+                <label>
+                    <input id="resource_select_all" type="checkbox">
+                    (select all)
+                </label>
                 @foreach (var item in Model.LoggedHoursByResource)
                 {
             <div>
-                <input class="resource_checkbox" type="checkbox">
-                <label>@Html.DisplayTextFor(modelItem => item[0][0].Resource)</label>
+                <label>
+                    <input class="resource_checkbox" type="checkbox" value="@item[0][0].Resource" name="resource">
+                    @Html.DisplayTextFor(modelItem => item[0][0].Resource)
+                </label>
             </div>
                 }
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <button class="btn btn-primary" from="resourceFilter">Save changes</button>
             </div>
         </div>
     </div>
-</div>
+</form>
 
 <!--project filter-->
 
 <form class="modal fade" method="post" id="projectFilter" tabindex="-1" role="dialog" aria-labelledby="projectFilterLabel" aria-hidden="true">
-    <input type="hidden" name="paul" id="paul" value="1234145" />
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
