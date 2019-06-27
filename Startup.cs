@@ -34,8 +34,7 @@ namespace JiraDashboard
 
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.Add(new ServiceDescriptor(typeof(JiraDBContext), new JiraDBContext("server=172.26.80.36;port=3306;database=jiradb;user=jira_rep_user;password=JIRA_Rep_UserPW")));
-
+            services.Add(new ServiceDescriptor(typeof(JiraDBContext), new JiraDBContext(this.Configuration.GetConnectionString("DefaultConnection"))));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
