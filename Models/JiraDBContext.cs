@@ -376,47 +376,51 @@ namespace JiraDashboard.Models
             this.LoggedHoursByResource = new List<List<List<IndividualTask>>>();
             foreach (IndividualTask item in this.IndividualTasks)
             {
-                List<List<IndividualTask>> ByProject = InLoggedHoursByProject(item);
-                List<List<IndividualTask>> ByResource = InLoggedHoursByResource(item);
+                //filter no monthly total logged hour
+                if(item.TotalLoggedHoursMonth != 0)
+                {
+                    List<List<IndividualTask>> ByProject = InLoggedHoursByProject(item);
+                    List<List<IndividualTask>> ByResource = InLoggedHoursByResource(item);
 
-                if (ByProject != null)
-                {
-                    AddITToGroup(ByProject, item);
-                }
-                else
-                {
-                    IndividualTask newItem = new IndividualTask
-                    (
-                        item.Resource,
-                        item.Project,
-                        item.TotalLoggedHoursWeek1,
-                        item.TotalLoggedHoursWeek2,
-                        item.TotalLoggedHoursWeek3,
-                        item.TotalLoggedHoursWeek4,
-                        item.TotalLoggedHoursMonth,
-                        item.TotalLoggedHoursTasksThisProject
-                    );
-                    this.LoggedHoursByProject.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
-                }
-                if (ByResource != null)
-                {
-                    AddITToGroup(ByResource, item);
-                }
-                else
-                {
-                    IndividualTask newItem = new IndividualTask
-                    (
-                        item.Resource,
-                        item.Project,
-                        item.TotalLoggedHoursWeek1,
-                        item.TotalLoggedHoursWeek2,
-                        item.TotalLoggedHoursWeek3,
-                        item.TotalLoggedHoursWeek4,
-                        item.TotalLoggedHoursMonth,
-                        item.TotalLoggedHoursTasksThisProject
-                    );
+                    if (ByProject != null)
+                    {
+                        AddITToGroup(ByProject, item);
+                    }
+                    else
+                    {
+                        IndividualTask newItem = new IndividualTask
+                        (
+                            item.Resource,
+                            item.Project,
+                            item.TotalLoggedHoursWeek1,
+                            item.TotalLoggedHoursWeek2,
+                            item.TotalLoggedHoursWeek3,
+                            item.TotalLoggedHoursWeek4,
+                            item.TotalLoggedHoursMonth,
+                            item.TotalLoggedHoursTasksThisProject
+                        );
+                        this.LoggedHoursByProject.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
+                    }
+                    if (ByResource != null)
+                    {
+                        AddITToGroup(ByResource, item);
+                    }
+                    else
+                    {
+                        IndividualTask newItem = new IndividualTask
+                        (
+                            item.Resource,
+                            item.Project,
+                            item.TotalLoggedHoursWeek1,
+                            item.TotalLoggedHoursWeek2,
+                            item.TotalLoggedHoursWeek3,
+                            item.TotalLoggedHoursWeek4,
+                            item.TotalLoggedHoursMonth,
+                            item.TotalLoggedHoursTasksThisProject
+                        );
 
-                    this.LoggedHoursByResource.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
+                        this.LoggedHoursByResource.Add(new List<List<IndividualTask>> { new List<IndividualTask> { newItem }, new List<IndividualTask> { item } });
+                    }
                 }
             }
 

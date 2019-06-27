@@ -45,10 +45,7 @@ C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.As
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.TagHelpers.input.cache
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.TagHelpers.output.cache
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\JiraDashboard.RazorCoreGenerate.cache
-C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\Razor\Views\Home\EngagementByProject.g.cshtml.cs
-C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\Razor\Views\Home\EngagementByResource.g.cshtml.cs
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\Razor\Views\Home\Index.g.cshtml.cs
-C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\Razor\Views\Home\Jira.g.cshtml.cs
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\Razor\Views\Home\Privacy.g.cshtml.cs
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\Razor\Views\Shared\Error.g.cshtml.cs
 C:\hswork\workFile\jira_dashboard\trunk\obj\Debug\netcoreapp2.2\Razor\Views\Shared\_CookieConsentPartial.g.cshtml.cs

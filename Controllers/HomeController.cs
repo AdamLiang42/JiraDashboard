@@ -11,6 +11,7 @@ namespace JiraDashboard.Controllers
     public class HomeController : Controller
     {
         public JiraDBContext context { get; set; }
+
         [HttpPost]
         public ActionResult Index(List<String> project, List<String> resource, DateTime setdate)
         {
@@ -47,26 +48,6 @@ namespace JiraDashboard.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-
-        /*public IActionResult Jira()
-        {
-            JiraDBContext context = HttpContext.RequestServices.GetService(typeof(JiraDashboard.Models.JiraDBContext)) as JiraDBContext;
-            context.GetTasksCreatedAndCompletedThisPeriodAndYTD();
-            context.GetLoggedHoursByProjectAndResource();
-            context.ProcessTasks();
-            context.ProcessIndividualTasks();
-            return View(context);
-        }*/
-        public IActionResult test(List<String> ProjectList)
-        {
-            //JiraDBContext context = HttpContext.RequestServices.GetService(typeof(JiraDashboard.Models.JiraDBContext)) as JiraDBContext;
-            //context.GetTasksCreatedAndCompletedThisPeriodAndYTD();
-            //context.GetLoggedHoursByProjectAndResource();
-            //context.ProcessTasks();
-            //context.ProcessIndividualTasks();
-            Console.WriteLine("success");
-            return View(this.context);
         }
     }
 }
