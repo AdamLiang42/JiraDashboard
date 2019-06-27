@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewData["Title"] = "EngagementByResource";
+}
+
+<table class="table-responsive">
+    <tr>
+        <th style="background-color:#DDEBF7; width:200px">
+            Resources
+            <button id="resourceFilterButton" type="button" class="btn btn-primary" data-toggle="modal" data-target="#resourceFilter">
+                +
+            </button>
+        </th>
+        <th style="background-color:#DDEBF7; width:60px">Project</th>
+        <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week1)</th>
+        <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week2)</th>
+        <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week3)</th>
+        <th style="background-color:#DDEBF7; width:100px">Total Hrs(Week4)</th>
+        <th style="background-color:#DDEBF7; width:100px">Total Logged Hrs(Month)</th>
+    </tr>
+</table>
+@foreach (var item in Model.LoggedHoursByResourceDisplay)
+{
+    <details>
+        <summary>
+            <table class="table-active">
+                <tr>
+                    <td style="width:200px">+@item[0][0].Resource</td>
+                    <td style="width:60px">@item[1].Count</td>
+                    <td style="width:100px">@item[0][0].TotalLoggedHoursWeek1</td>
+                    <td style="width:100px">@item[0][0].TotalLoggedHoursWeek2</td>
+                    <td style="width:100px">@item[0][0].TotalLoggedHoursWeek3</td>
+                    <td style="width:100px">@item[0][0].TotalLoggedHoursWeek4</td>
+                    <td style="width:100px">@item[0][0].TotalLoggedHoursMonth</td>
+                </tr>
+            </table>
+        </summary>
+        <table class="table-responsive">
+            @foreach (var i in item[1])
+            {
+                <tr>
+                    <td style="width:200px">@i.Project</td>
+                    <td style="width:60px">1</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek1</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek2</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek3</td>
+                    <td style="width:100px">@i.TotalLoggedHoursWeek4</td>
+                    <td style="width:100px">@i.TotalLoggedHoursMonth</td>
+                </tr>
+            }
+        </table>
+    </details>
+}
+
+<table class="table-responsive">
+    <tr>
+        <th style="background-color:#DDEBF7; width:200px">Grand Total</th>
+        <th style="background-color:#DDEBF7; width:60px">@Model.EngagementByResourceTotal[0]</th>
+        <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[1]</th>
+        <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[2]</th>
+        <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[3]</th>
+        <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[4]</th>
+        <th style="background-color:#DDEBF7; width:100px">@Model.EngagementByResourceTotal[5]</th>
+    </tr>
+</table>
+

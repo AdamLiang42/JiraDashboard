@@ -9,10 +9,10 @@ namespace JiraDashboard.Models
     public class JiraDBContext
     {
         public string ConnectionString { get; set; }
-        public DateTime ReportStartDate { get; set; } = new DateTime(2019, 05, 20);
-        public DateTime ReportEnddate { get; set; } = new DateTime(2019, 06, 14);
-        public DateTime AllTimeStartDate { get; set; } = new DateTime(2018, 06, 14);
-        public DateTime AllTimeEndDate { get; set; } = new DateTime(2019, 06, 14);
+        public DateTime ReportStartDate { get; set; }
+        public DateTime ReportEnddate { get; set; }
+        public DateTime AllTimeStartDate { get; set; }
+        public DateTime AllTimeEndDate { get; set; }
         public List<Tasks> TasksCreatedAndCompletedThisPeriodAndYTD { get; set; }
         public List<IndividualTask> IndividualTasks { get; set; }
         public List<List<List<IndividualTask>>> LoggedHoursByProject { get; set; }
@@ -526,6 +526,13 @@ namespace JiraDashboard.Models
                 temp[5] += item[0][0].TotalLoggedHoursMonth;
             }
             this.EngagementByResourceTotal = temp;
+        }
+        public void SetDate(DateTime date)
+        {
+            this.ReportStartDate = date.AddDays(-28);
+            this.ReportEnddate = date;
+            this.AllTimeStartDate = date.AddDays(-365);
+            this.AllTimeEndDate = date;
         }
     }
 }

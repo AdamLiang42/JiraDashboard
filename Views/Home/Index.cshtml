@@ -45,6 +45,52 @@
                                 maintainAspectRatio: true
                             }
                     });
+                //resource check box
+                $('.resource_checkbox').each(function(){
+                    if ((@Json.Serialize(Model.SelectedResource)).includes(this.value)) {
+                        this.checked = true;
+                    }
+                    else {
+                        this.checked = false
+                    }
+                });
+                if ((@Json.Serialize(Model.SelectedResource)).length == (@Json.Serialize(Model.LoggedHoursByResource)).length) {
+                    $('#resource_select_all').prop('checked', true);
+                }
+                else {
+                    $('#resource_select_all').prop('checked', false);
+                }
+                //project check box
+                $('.project_checkbox').each(function () {
+                    if ((@Json.Serialize(Model.SelectedProject)).includes(this.value)) {
+                        this.checked = true;
+                    }
+                    else {
+                        this.checked = false
+                    }
+                });
+                if ((@Json.Serialize(Model.SelectedProject)).length == (@Json.Serialize(Model.LoggedHoursByProject)).length) {
+                    $('#project_select_all').prop('checked', true);
+                }
+                else {
+                    $('#project_select_all').prop('checked', false);
+                }
+                var date = "" + @Model.ReportEnddate.Year + "-";
+                if (@Model.ReportEnddate.Month < 10) {
+                     date += "0" + @Model.ReportEnddate.Month + "-";
+                }
+                else {
+                    date += @Model.ReportEnddate.Month + "-";
+                }
+                if (@Model.ReportEnddate.Day < 10) {
+                    date += "0" + @Model.ReportEnddate.Day;
+                }
+                else {
+                    date += @Model.ReportEnddate.Day;
+                }
+                console.log(date);
+                document.getElementById("datePicker").value = date;
+
             }
         </script>
         <style>
@@ -53,6 +99,13 @@
             }
         </style>
     </head>
+
+    <form style="text-align:center" method="post" id="submit">
+        <label for="start">End date of the report: </label>
+        <input type="date" id="datePicker" name="setdate">
+        <button class="btn btn-primary" form="submit">Submit</button>
+    </form>
+
 <!--project tasks graph and table-->
 <div style="float: left; width:680px; margin-left:10px">
     <h2>Project Tasks (Completed and Current Backlog</h2>
@@ -213,10 +266,8 @@
     </div>
 </div>
 
-
 <!--resource filter-->
-
-<form class="modal fade" method="post" id="resourceFilter" tabindex="-1" role="dialog" aria-labelledby="resourceFilterLabel" aria-hidden="true">
+<div class="modal fade" method="post" id="resourceFilter" tabindex="-1" role="dialog" aria-labelledby="resourceFilterLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -234,7 +285,7 @@
                 {
             <div>
                 <label>
-                    <input class="resource_checkbox" type="checkbox" value="@item[0][0].Resource" name="resource">
+                    <input class="resource_checkbox" type="checkbox" value="@item[0][0].Resource" name="resource" form="submit">
                     @item[0][0].Resource
                 </label>
             </div>
@@ -242,15 +293,14 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" from="resourceFilter">Save changes</button>
+                <button class="btn btn-primary" form="submit">Save changes</button>
             </div>
         </div>
     </div>
-</form>
+</div>
 
 <!--project filter-->
-
-<form class="modal fade" method="post" id="projectFilter" tabindex="-1" role="dialog" aria-labelledby="projectFilterLabel" aria-hidden="true">
+<div class="modal fade" method="post" id="projectFilter" tabindex="-1" role="dialog" aria-labelledby="projectFilterLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -268,7 +318,7 @@
                 @foreach (var item in Model.LoggedHoursByProject)
                 {
                 <label>
-                    <input class="project_checkbox" type="checkbox" value="@item[0][0].Project" name="project">
+                    <input class="project_checkbox" type="checkbox" value="@item[0][0].Project" name="project" form="submit">
                     @item[0][0].Project
                 </label>
                 <br />
@@ -276,11 +326,11 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button class="btn btn-primary" form="projectFilter">Save changes</button>
+                <button class="btn btn-primary" form="submit">Save changes</button>
             </div>
         </div>
     </div>
-</form>
+</div>
 
 <script>
     $(document).ready(function(){
